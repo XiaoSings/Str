@@ -10,9 +10,9 @@ And make sure you put them in the same folder or how ever you prefer, But i reco
 
 Because that way you wouldn't have to go to the \[Str.cpp\] and change the including part of the main header.
 
-After downloadinf these files and putting them in your project, you then have to include it in your main application file
+After downloading these files and putting them in your project, you then have to include it in your main application file
 
-Which means the main source of the application where the basically first executes from. You can put it anywhere you want
+Which means the main source of the application where the main executation happens from. You can put it anywhere you want
 
 The main application file, or any other file.
 
