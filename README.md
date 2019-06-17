@@ -18,7 +18,7 @@ The main application file, or any other file.
 
 Make sure you include the "Str.h" file NOT "Str.cpp"
 ---
-# Keywords:
+# ToLowerCase() & ToUpperCase():
 ---
 ```c++
 // this shows you how to convert a character/string to a lower case
@@ -69,7 +69,7 @@ int main()
 Besides those two functions, It has other four functions that can be useful
 
 # Extra:
-
+# IsLowerType() & IsUpperType():
 ```c++
 // This shows you how to check whether the character/string is a upper case type
 // which means that it only includes upper case letter(s).. no lower case letter(s)
@@ -157,6 +157,63 @@ int main()
   }
 }
 ```
+
+## NEW RELEASES:
+# Split():
+---
+This function has 4 parameters. 2 of the are optional, and other first, and second parameters are not optional!
+
+The first parameter is the string that holds the text.
+
+The second parameter is the splitter. The splitter is what the program will look for through the string
+And try to break from that split, and add the value that it has collected to the list.
+
+The third parameter is the limit of the list! So -1 or <= 0 means infinite list, But if the limit is 1
+It will return list of one item in it!.
+
+The fourth parameter is mode. Mode is what the value should be, or should not be.
+Default mode is "\[/\*\*/\]" that mode is used if you don't want any mode!
+
+every mode must start with opening braces \[ and closing braces \]
+
+## Split() Modes:
+```
+! -- not
+/*trim*/ -- trim
+
+/*empty*/ -- empty
+
+/**/ -- none
+
+Examples:
+![/*empty*/] -  THIS MODE ADDS THE VALUE ONLY IF ITS NOT EMPTY !
+[/**/] - THIS MODE DOES NOTHING !
+![/**/] - THIS MODE DOES ALL THE MODES, BASICALLY IT'S A REVERSE OF [/**/]
+[/*empty*/] - THIS MODE ADDS THE VALUE ONLY IF IT'S EMPTY !
+[/*trim*/] - THIS MODE TRIMS THE VALUE !
+![/*trim*/] - THIS DOES NOT TRIM THE VALUE !
+
+You can also combine them!
+![/*empty*/][/*trim*/] - THIS MODE CHECKS SURE THE VALUE IS NOT EMPTY IS ALSO TRIMMED !
+
+ ALSO MAKE SURE THIS IS A STRING!!!! "[/**/]" !!!
+```
+# Using Split():
+```c++
+// With this function you can split strings !
+// The result of this function will be "vector" type
+// vector is something like an "array", but more better !
+// You won't have to include the "vector" type
+// Because the "Str.h" already has it included !
+// Make sure the type you give the vector is "string"!
+#include <iostream>
+#include "Str.h"
+int main {
+  std::string my_text = "Hello, world. This your name";
+  std::vector<std::string> my_results;
+  my_results = Str::Split(my_text," ");
+}
+
 
 
 I HOPE I MADE YOUR LIFE EASIER :)
