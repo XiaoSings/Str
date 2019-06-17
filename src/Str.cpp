@@ -1,16 +1,12 @@
+/**UPDATE [6/16/2019]*/
 // THIS FILE HOLDS THE IMPLEMENTION OF THE MAIN FILE CALLED: Str.h
 // THIS FILE ISN'T MIGHT BE LINKED WITH YOUR  MAIN FILE!
 // LINK THE HEADER NAME: Str.h
-
-#include <iostream>
-#include <map>
-#include <iterator>
-#include <sstream>
 #include "Str.h"
-
+#include <sstream>
 namespace Str
 {
-	// PRIAVTE CONSTRUCTOE!
+	// PRIAVTE CONSTRUCTOR
 	namespace
 	{
 		std::map<char, std::string> ToLowerCase_Alphabets_Key_Pair_Object;
@@ -189,8 +185,26 @@ namespace Str
 			}
 			return r;
 		}
-
+		std::string trim(std::string value)
+		{
+		    std::string result = "";
+		    for(int i = 0;i<value.length();i++) {
+                char character = value[i];
+                if(character != '\n' && character != '\r'&&character != '\t' && character != ' ' && character != '\v' && character != '\f'){
+                    std::stringstream val;
+                    std::string vl;
+                    val << character;
+                    val >> vl;
+                    result += vl;
+                }
+                else{
+                    continue;
+                }
+		    }
+		    return result;
+		}
 	}
+
 	/** THIS IS A LOWERCASE FUNCTION*/
 	std::string ToLowerCase(std::string value)
 	{
@@ -430,4 +444,393 @@ namespace Str
 		}
 		return result;
 	}
+
+    /**STRING TYPE (SPLIT)*/
+    std::vector<std::string> Split(std::string main,std::string splitter,int limit,std::string mode)
+    {
+        std::vector<std::string> results;
+        std::vector<std::string> table;
+        std::string key = "";
+        std::string value = "";
+        for(int i = 0;i<main.length();i++) {
+            char c = main[i];
+
+            if(c == ' ') {
+                if(key.length() >= splitter.length()){
+                    if(key == splitter) {
+                        table.push_back(value);
+                        value = "";
+                    }
+                    key = "";
+                }
+                else{
+                    if(key != "") {
+                        value += key;
+                    }
+                    key = "";
+                }
+                value += " ";
+            }
+            else if(c == '\n'){
+                if(key.length() >= splitter.length()){
+                    if(key == splitter) {
+                        table.push_back(value);
+                        value = "";
+                    }
+                    key = "";
+                }
+                else{
+                    if(key != "") {
+                        value += key;
+                    }
+                    key = "";
+                }
+                value += "\n";
+            }
+            else if(c == '\r') {
+                if(key.length() >= splitter.length()){
+                    if(key == splitter) {
+                        table.push_back(value);
+                        value = "";
+                    }
+                    key = "";
+                }
+                else{
+                    if(key != "") {
+                        value += key;
+                    }
+                    key = "";
+                }
+                value += "\r";
+
+            }
+            else if(c == '\t'){
+                if(key.length() >= splitter.length()){
+                    if(key == splitter) {
+                        table.push_back(value);
+                        value = "";
+                    }
+                    key = "";
+                }
+                else{
+                    if(key != "") {
+                        value += key;
+                    }
+                    key = "";
+                }
+                value += "\t";
+            }
+            else{
+                std::stringstream st;
+                st << c;
+                std::string st_val;
+                st >> st_val;
+                key += st_val;
+            }
+
+            if(key.length()  >= splitter.length()) {
+                // updates the key!
+                // update key
+                // update value
+                if(key == splitter) {
+                    table.push_back(value);
+                    value = "";
+                    key = "";
+                }
+                else{
+                    value += key;
+                    key = "";
+                }
+
+            }
+        }
+        if(value != "") {
+            table.push_back(value);
+            value = "";
+        }
+        // checks for limit, and updates the size to return
+        int tableSize = table.size();
+        if(limit > 0) {
+            if(limit <= tableSize) {
+                tableSize = limit;
+            }
+        }
+        // main results loop!
+
+        int max_limit = 0;
+        std::vector<std::string>::iterator it = table.begin();
+        while(max_limit < tableSize){
+            value = *it;
+            // reading the mode
+            if(mode == "[/*trim*/]![/*empty*]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "[/**/]"){
+                results.push_back(value);
+            }
+            else if(mode == "[/*trim*/]") {
+                value = trim(value);
+                results.push_back(value);
+            }
+            else if(mode == "[/**/]![/*empty*/]"){
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/][/*empty*/]"){
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "[/*trim*/][/*empty*]") {
+                value = trim(value);
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/]![/*empty*/]"){
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/]"){
+                results.push_back(value);
+            }
+            else if(mode == "![/**/]![/*empty*/]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/**/][/*empty*/]"){
+                value = trim(value);
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/**/]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else{
+                if(mode == "[/*empty*/]![/*trim*/]"){
+                    if(value == "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "[/*empty*/]") {
+                    if(value == "")results.push_back(value);
+                }
+                else if(mode == "[/*empty*/]![/**/]"){
+                    if(value == "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/][/*trim*/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "[/*empty*/][/*trim*]") {
+                    value = trim(value);
+                    if(value == ""){
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/]![/*trim*/]"){
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/]"){
+                    if(value!="") results.push_back(value);
+                }
+                else if(mode == "![/*empty*/]![/**/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/][/*trim*/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+            }
+            it++;
+            max_limit++;
+        }
+
+        return results;
+    }
+	/**CHAR TYPE (SPLIT)*/
+    std::vector<std::string> Split(std::string main,char splitter,int limit,std::string mode)
+    {
+        std::vector<std::string> results;
+        std::vector<std::string> table;
+        char key;
+        std::string value = "";
+        for(int i = 0;i<main.length();i++) {
+            key = main[i];
+            if(key == splitter){
+                table.push_back(value);
+                value = "";
+            }
+            else{
+                std::string st_val;
+                std::stringstream st;
+                if(key == ' ') {
+                    value += " ";
+                }
+                else if(key == '\n') {
+                    value += "\n";
+                }
+                else if(key == '\t') {
+                    value += "\t";
+                }
+                else if(key == '\r') {
+                    value += "\r";
+                }else{
+                    st << key;
+                    st >> st_val;
+                    value += st_val;
+                    st_val = "";
+                }
+            }
+        }
+        if(value != "") {
+            table.push_back(value);
+            value = "";
+        }
+        // checks for limit, and updates the size to return
+        int tableSize = table.size();
+        if(limit > 0) {
+            if(limit <= tableSize) {
+                tableSize = limit;
+            }
+        }
+        // main results loop!
+
+        int max_limit = 0;
+        std::vector<std::string>::iterator it = table.begin();
+        mode = trim(mode);
+        while(max_limit < tableSize){
+            value = *it;
+            // reading the mode
+            if(mode == "[/*trim*/]![/*empty*]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "[/**/]"){
+                results.push_back(value);
+            }
+            else if(mode == "[/*trim*/]") {
+                value = trim(value);
+                results.push_back(value);
+            }
+            else if(mode == "[/**/]![/*empty*/]"){
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/][/*empty*/]"){
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "[/*trim*/][/*empty*]") {
+                value = trim(value);
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/]![/*empty*/]"){
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/*trim*/]"){
+                results.push_back(value);
+            }
+            else if(mode == "![/**/]![/*empty*/]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/**/][/*empty*/]"){
+                value = trim(value);
+                if(value == "") {
+                    results.push_back(value);
+                }
+            }
+            else if(mode == "![/**/]"){
+                value = trim(value);
+                if(value != "") {
+                    results.push_back(value);
+                }
+            }
+            else{
+                if(mode == "[/*empty*/]![/*trim*/]"){
+                    if(value == "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "[/*empty*/]") {
+                    if(value == "")results.push_back(value);
+                }
+                else if(mode == "[/*empty*/]![/**/]"){
+                    if(value == "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/][/*trim*/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "[/*empty*/][/*trim*]") {
+                    value = trim(value);
+                    if(value == ""){
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/]![/*trim*/]"){
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/]"){
+                    if(value!="") results.push_back(value);
+                }
+                else if(mode == "![/*empty*/]![/**/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+                else if(mode == "![/*empty*/][/*trim*/]"){
+                    value = trim(value);
+                    if(value != "") {
+                        results.push_back(value);
+                    }
+                }
+            }
+            it++;
+            max_limit++;
+        }
+
+        return results;
+    }
 }
+
