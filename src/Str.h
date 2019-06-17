@@ -1,5 +1,6 @@
 // Creator: Xiao sings
 // created date [6/11/2019]
+/** UPDATE [6/16/2019] */
 // finish date [created date]
 // Find me @Xiao_sings {Instagram}
 // Find me @Xiao_sings {Twitter}
@@ -18,6 +19,12 @@
 #ifndef STR_H
 #define STR_H
 #include <iostream>
+#include <map>
+#include <iterator>
+#include <list>
+#include <string>
+#include <vector>
+
 namespace Str
 {
 	/** THIS IS A LOWERCASE FUNCTION*/
@@ -48,5 +55,12 @@ namespace Str
 	bool IncludesLower(std::string value);
 	/**CHAR TYPE*/
 	bool IncludesLower(char value);
+
+	/**STRING TYPE (SPLIT)*/
+    std::vector<std::string> Split(std::string main,std::string splitter,int limit = -1,std::string mode = "[/**/]");
+	/**CHAR TYPE (SPLIT)*/
+	std::vector<std::string> Split(std::string main,char splitter,int limit = -1,std::string mode = "[/**/]");
+
 }
+
 #endif // STR_H
