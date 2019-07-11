@@ -53,7 +53,7 @@ int main()
   std::string name = "xiao";
   char alphabet = 'x';
   
-  // this is the function that is used to convert a character, or string to a lower case
+  // this is the function that is used to convert a character, or string to a upper case
   name = Str::ToUpperCase(name);
   // character
   alphabet = Str::ToUpperCase(alphabet);
@@ -147,7 +147,7 @@ int main()
   std::string name = "xiao"; // this string does not have a upper case letter, it wouldn't work
   char alphabet = 'X'; // this character is a upper case letter, so it will work!
   
-  // this is the function that is used to check if the string/character is a lower case
+  // this is the function that is used to check if the string/character is a upper case
   if(Str::IncludesUpper(name)) {
     std::cout << "THE VALUE DOES INCLUDE A UPPER CASE LETTER !" << std::endl;
   }
